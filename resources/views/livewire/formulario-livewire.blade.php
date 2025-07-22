@@ -1,3 +1,4 @@
+
 <div>
     @if (session()->has('success'))
         <div class="text-green-600 mb-4">{{ session('success') }}</div>

@@ -14,7 +14,7 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 
-
+// Rutas para el formulario 
 Route::get('/formulario', function () {
     return view('formulario.crear_formulario'); // Vista principal que contiene el modal
 })->name('formulario');

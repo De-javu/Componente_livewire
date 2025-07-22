@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
+// Se crea el componente Livewire para manejar el formulario
 class FormularioLivewire extends Component
 {
     public $cedula = '';
@@ -19,6 +20,7 @@ class FormularioLivewire extends Component
     public $fecha_final = '';
     public $ciudades = [];
 
+    // Reglas de validación para el formulario
     protected $rules = [
         'cedula' => 'required|string|max:255',
         'nombre' => 'required|string|max:255',
@@ -28,13 +30,24 @@ class FormularioLivewire extends Component
         'fecha_inicial' => 'required|date',
         'fecha_final' => 'required|date',
     ];
-
+     // Mensajes personalizados de validación
+    protected $messages = [
+        'cedula.required' => 'La cédula es obligatoria.',
+        'nombre.required' => 'El nombre es obligatorio.',
+        'apellido.required' => 'El apellido es obligatorio.',
+        'ciudad.required' => 'La ciudad es obligatoria.',
+        'celular.required' => 'El celular es obligatorio.',
+        'fecha_inicial.required' => 'La fecha inicial es obligatoria.',
+        'fecha_final.required' => 'La fecha final es obligatoria.',
+    ];
+// Mensajes personalizados de validación
     public function mount()
     {
         // Obtener las ciudades del enum de la base de datos
         $this->ciudades = $this->getCityOptions();
     }
 
+ // Método para obtener las opciones de ciudad desde el enum
     private function getCityOptions()
     {
         try {
@@ -51,8 +64,10 @@ class FormularioLivewire extends Component
         }
     }
 
+ // Método para manejar el envío del formulario
     public function submit()
     {
+        // Validar los datos del formulario
         $this->validate();
 
         Formulario::create([
@@ -73,6 +88,8 @@ class FormularioLivewire extends Component
         $this->dispatch('close-modal', 'edit-profile');
     }
 
+
+    // Método para renderizar la vista del componente
     public function render()
     {
         return view('livewire.formulario-livewire', [
